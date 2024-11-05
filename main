@@ -1,6 +1,5 @@
 import random
-
-#  Art for Hangman visuals
+# Art for Hangman visuals
 HANGMAN_PICS = [
     '''
       +---+
@@ -53,7 +52,7 @@ HANGMAN_PICS = [
     ''',
 ]
 
-# Function to choose a word from a text file
+# randomly choosing one word from txt file
 def choose_word():
     try:
         with open("words.txt", "r") as file:
@@ -63,17 +62,17 @@ def choose_word():
         print("The file 'words.txt' was not found.")
         exit()
 
-# Display the word with guessed letters and blanks for unguessed letters
+# filling the blanks
 def display_progress(word, guessed_letters):
     display = [letter if letter in guessed_letters else "_" for letter in word]
     return " ".join(display)
 
-# Main Hangman function
+# Main function
 def hangman():
     word = choose_word()
     guessed_letters = set()
     incorrect_guesses = 0
-    max_attempts = len(HANGMAN_PICS) - 1  # Based on visual stages
+    max_attempts = len(HANGMAN_PICS) - 1  
 
     print("Welcome to Hangman!")
     print("Try to guess the word one letter at a time.\n")
@@ -96,10 +95,8 @@ def hangman():
             print("You already guessed that letter.")
             continue
         
-        # Add the guess to the set of guessed letters
         guessed_letters.add(guess)
         
-        # Check if the guessed letter is in the word
         if guess in word:
             print(f"Good job! '{guess}' is in the word.")
             # Check if all letters have been guessed
@@ -107,17 +104,17 @@ def hangman():
                 print("\nCongratulations! You've guessed the word:", word)
                 break
         else:
-            # If guess is incorrect, increment incorrect guess count
+            # If guess is incorrect incrementing incorrect guess count
             incorrect_guesses += 1
             print(f"Sorry, '{guess}' is not in the word.")
         
-    # End of game: check if player lost
+    # End of game
     if incorrect_guesses == max_attempts:
         print(HANGMAN_PICS[incorrect_guesses])
         print("\nYou've run out of guesses. The word was:", word)
     print("Thanks for playing!")
 
-# Main game loop with replay option
+# play again option
 while True:
     hangman()
     play_again = input("Would you like to play again? (yes/no): ").lower()
